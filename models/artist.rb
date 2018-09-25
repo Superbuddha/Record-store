@@ -8,11 +8,11 @@ class Artist
   def initialize (options)
     @name = options['name']
     @origin = options['origin']
-    @id = options ['id'].to_i
-
+    @id = options['id'].to_i
   end
+
   def save()
-    sql = "INSERT INTO artists (name, origin), VALUES ($1, $2) RETURNING id"
+    sql = "INSERT INTO artists (name, origin) VALUES ($1, $2) RETURNING id"
     values = [@name, @origin]
     artist = SqlRunner.run(sql, values)
     @id = artist['id'].to_i
@@ -20,7 +20,7 @@ class Artist
 
   def update()
     sql = "UPDATE artists (name, origin) = ($1, $2) WHERE id = $3"
-    values = [@name]
+    values = [@name, @origin]
     artist = SqlRunner.run(sql,values)
     @id = artist['id'].to_i
   end
@@ -30,6 +30,7 @@ class Artist
     values = [@id]
     SqlRunner.run(sql, values)
   end
+  
   def self.delete_all
     sql = "DELETE FROM artists"
     SqlRunner.run(sql)
