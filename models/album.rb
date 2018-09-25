@@ -7,19 +7,19 @@ class Album
   def initialize (options)
     @title = options['title']
     @genre = options['genre']
-    @stock = options
+    @stock = options['stock'].to_i
     @id = options['id'].to_i
   end
 
   def save()
-    sql = "INSERT INTO albums(title, genre) VALUES($1, $2, $3)RETURNING id"
+    sql = "INSERT INTO albums(title, genre, stock) VALUES($1, $2, $3)RETURNING id"
     values = [@title, @genre, @stock]
     album = SqlRunner.run(sql, values)
-    @id = album['id'].to_i
+    @id = album[0]['id'].to_i
   end
 
   def update()
-    sql = "UPDATE albums SET (title, genre) = ($1, $2, $3) WHERE id = $3"
+    sql = "UPDATE albums SET (title, genre, stock) = ($1, $2, $3) WHERE id = $3"
     values = [@title, @genre, @stock]
     album = SqlRunner.run(sql, values)
     @id = album['id'].to_i

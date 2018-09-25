@@ -1,21 +1,23 @@
 require_relative('../db/sql_runner.rb')
+require('pry')
+
 
 class Artist
 
   attr_accessor :name, :origin
   attr_reader :id
 
-  def initialize (options)
+  def initialize(options)
     @name = options['name']
     @origin = options['origin']
-    @id = options['id'].to_i
+    @id = options['id'].to_i if options['id']
   end
 
   def save()
     sql = "INSERT INTO artists (name, origin) VALUES ($1, $2) RETURNING id"
     values = [@name, @origin]
     artist = SqlRunner.run(sql, values)
-    @id = artist['id'].to_i
+    @id = artist[0]['id'].to_i
   end
 
   def update()
@@ -30,7 +32,7 @@ class Artist
     values = [@id]
     SqlRunner.run(sql, values)
   end
-  
+
   def self.delete_all
     sql = "DELETE FROM artists"
     SqlRunner.run(sql)
