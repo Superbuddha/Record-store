@@ -1,4 +1,4 @@
-require_relative('../db/sql_runner.rb')
+require_relative('../db/sql_runner.rb'
 class Album
 
   attr_accessor :title, :genre, :stock
@@ -34,5 +34,11 @@ class Album
   def self.delete_all
     sql ="DELETE FROM albums"
     SqlRunner.run(sql)
+  end
+
+  def self.all()
+    sql = "SELECT * FROM albums"
+    album_data = SqlRunner.run(sql)
+
   end
 end
