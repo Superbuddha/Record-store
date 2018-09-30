@@ -1,4 +1,4 @@
-require_relative('../db/sql_runner.rb'
+require_relative('../db/sql_runner.rb')
   class Album
 
     attr_accessor :title, :genre, :stock
@@ -23,6 +23,7 @@ require_relative('../db/sql_runner.rb'
       values = [@title, @genre, @stock]
       album = SqlRunner.run(sql, values)
       @id = album['id'].to_i
+    
     end
 
     def delete()
